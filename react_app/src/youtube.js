@@ -3,36 +3,55 @@ import './youtube.css';
 
 export default function Youtube() {
     const [videoList, setVideoList] = useState([]);
-    const [loading, setLoading] = useState(true); 
+    const [query, setQuery] = useState('');
+    const [loading, setLoading] = useState(false);
+
+    const fetchVideos = async (searchQuery) => {
+        setLoading(true);
+        try {
+            const API_KEY = 'AIzaSyD15Zj65q52HQwTuDm-KcaS4yBy1j1ZleE'; 
+            const response = await fetch(`https://www.googleapis.com/youtube/v3/search?key=${API_KEY}&part=snippet&type=video&q=${searchQuery}&maxResults=10`);
+
+            if (!response.ok) {
+                throw new Error("Failed to fetch data from YouTube API");
+            }
+
+            const data = await response.json();
+
+            const formattedData = data.items.map((item) => ({
+                id: item.id.videoId,
+                img_t: item.snippet.thumbnails.high.url,
+                img_c: item.snippet.thumbnails.default.url,
+                detail: item.snippet.title,
+                channelname: item.snippet.channelTitle,
+                feature: new Date(item.snippet.publishedAt).toLocaleDateString(),
+            }));
+
+            setVideoList(formattedData);
+        } catch (error) {
+            console.error("Error fetching videos:", error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const handleSearch = (event) => {
+        event.preventDefault();
+        fetchVideos(query);
+    };
 
     useEffect(() => {
-        
-        fetch("http://localhost:3001/api/videoList")
-            .then((response) => {
-                if (!response.ok) {
-                    throw new Error("Failed to fetch");
-                }
-                return response.json();
-            })
-            .then((data) => {
-                setVideoList(data); 
-                setLoading(false); 
-            })
-            .catch((error) => {
-                console.error("Error fetching videos:", error);
-                setLoading(false);
-            });
+        // Initial fetch with a default query if desired
+        fetchVideos('React tutorials');
     }, []);
 
     if (loading) {
-       
         return <p>Loading...</p>;
     }
 
     return (
         <>
             <div className="sidebar">
-                
                 <div className="left">
                     <div className="line">
                         <img
@@ -47,6 +66,7 @@ export default function Youtube() {
                         />
                     </div>
                 </div>
+                {/* Sidebar Navigation */}
                 <div className="Navigator1">
                     <div className="images">
                         <img
@@ -62,24 +82,7 @@ export default function Youtube() {
                         />
                         <p className="text">Explore</p>
                     </div>
-                    <div className="images">
-                        <img
-                            src="https://github.com/PatelNeelMahesh/frontend_tasks/blob/main/02.youtube-clone/assets/shorts.png?raw=true"
-                            alt="Shorts icon"
-                        />
-                        <p className="text">Short</p>
-                    </div>
-                    <div className="images">
-                        <img
-                            src="https://github.com/PatelNeelMahesh/frontend_tasks/blob/main/02.youtube-clone/assets/subscription.png?raw=true"
-                            alt="Subscription icon"
-                        />
-                        <p className="text">Subscription</p>
-
-                    </div>
-                </div>
-
-                <div className="navi2">
+                    <div className="navi2">
                     <div className="images">
                         <img
                             src="https://github.com/PatelNeelMahesh/frontend_tasks/blob/main/02.youtube-clone/assets/library.png?raw=true"
@@ -168,14 +171,23 @@ export default function Youtube() {
                         <p className="text">Show More</p>
                     </div>
                 </div>
+
+                </div>
             </div>
             <div className="navbar">
-                <input type="text" placeholder="Search" className="search" />
+                <input 
+                    type="text" 
+                    placeholder="Search" 
+                    className="search"
+                    value={query}
+                    onChange={(e) => setQuery(e.target.value)}
+                />
                 <div className="lens">
                     <div className="icon">
                         <img
                             src="https://github.com/PatelNeelMahesh/frontend_tasks/blob/main/02.youtube-clone/assets/search.png?raw=true"
                             alt=""
+                            onClick={handleSearch}
                         />
                     </div>
                     <div className="mic">
@@ -185,11 +197,10 @@ export default function Youtube() {
                         />
                     </div>
                 </div>
-
             </div>
             <div className="related">
                 <button className="active">All</button>
-                <button>Coke Studio</button>
+                <button>cook Studio</button>
                 <button>UX</button>
                 <button>Case Study</button>
                 <button>Music</button>
@@ -197,7 +208,7 @@ export default function Youtube() {
                 <button>Tour</button>
                 <button>Saintmartin</button>
                 <button>Tech</button>
-                <button>iPhone 13</button>
+                <button>IPhone 13</button>
                 <button>User Interface Design</button>
             </div>
             <div className="main2">

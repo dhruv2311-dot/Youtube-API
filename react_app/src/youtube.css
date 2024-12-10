@@ -1,0 +1,124 @@
+body{color: white;
+    margin: 0px;
+    padding:0px ;
+    overflow-x: hidden;
+    background-color: #181818;}
+    .left{
+        display: flex;
+    }
+    
+    .images{
+        display: flex;
+        margin-top: -7px;
+        text-align: center;
+        align-items: center;
+    }
+    
+    .images > img{
+        width: 30px;
+        height: 30px;
+    }
+    
+    .Navigator1{
+       
+        border-bottom: 1px solid white;
+    }
+    
+    h5{
+        margin-top: 10px;
+    }
+    
+    .text{
+        font-size: 90%;
+    }
+    .navigator3{
+        margin-top: -10px;
+    }
+    .hr{
+        border: none;
+        height: 1px;
+        background-color: white;
+    }
+    .sidebar{
+       width: 200px;
+       background-color: rgb(33, 33, 33);
+       padding-top: 20px;
+       position: fixed;
+       padding-left:10px ;
+       height: 100vh;
+    
+    }
+    .navi2{
+        margin-top: 10px;
+        border-bottom: 1px solid white;
+    }
+    .navbar{
+        background-color: rgb(24, 24, 24);
+        height: 50px;
+        border-bottom:1px solid gray;
+        width:100vw;
+    }
+    .search{
+        margin: 15px 515px;
+        width: 350px;
+        height: 20px;
+        background-color: white;
+        color: black;
+    }
+    .icon{
+        background-color: gray;
+        width: 24px;
+        height: 24px;
+        margin: -39px 875px
+    }
+    .mic{
+        
+      width: 24px;
+      height: 24px;  
+      margin: 1% 0 0 60%;
+     
+    }
+    .options{
+        
+        width: 100px;
+        margin: -36px 82%;
+        
+        display: flex;
+        padding: 0px 20px;
+    }
+    
+    .related{
+        display: flex;
+        overflow-x: 0;
+        padding: 10px 40px;
+        margin: 2.3% 0 0 10%;
+        border-bottom: 1px solid gray;
+        background-color: #181818;
+        border-top: 1px solid gray;
+       
+    
+    }
+    .related button{
+        padding: 7px 10px;
+        margin: 0px 20px;
+        border-radius: 40px;
+    }
+    .related button:hover{
+        background-color: bisque;
+    }
+    .main2{
+       display: grid;
+       grid-template-columns: 22% 22% 22% 22%;
+       width: calc(100vw - 170px);
+       margin-left:270px ;
+       background-color: #181818;
+       margin-top: 40px;
+       
+    }
+    .information{
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        font-size: 90%;
+        width:80%;
+    }

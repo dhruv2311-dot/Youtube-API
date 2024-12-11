@@ -5,7 +5,8 @@ export default function Youtube() {
     const [videoList, setVideoList] = useState([]);
     const [query, setQuery] = useState('');
     const [loading, setLoading] = useState(false);
-
+   
+    const [selectedVideoId, setSelectedVideoId] = useState(null); 
     const fetchVideos = async (searchQuery) => {
         setLoading(true);
         try {
@@ -21,7 +22,7 @@ export default function Youtube() {
             const formattedData = data.items.map((item) => ({
                 id: item.id.videoId,
                 img_t: item.snippet.thumbnails.high.url,
-                img_c: item.snippet.thumbnails.default.url,
+                // img_c: item.snippet.thumbnails.default.url,
                 detail: item.snippet.title,
                 channelname: item.snippet.channelTitle,
                 feature: new Date(item.snippet.publishedAt).toLocaleDateString(),
@@ -35,19 +36,39 @@ export default function Youtube() {
         }
     };
 
+    const shortsQuery = () => {
+        fetchVideos("shorts")
+    }
+    const subscriptionQuery = () => {
+        fetchVideos("subscription")
+    }
+    const exploreQuery = () => {
+        fetchVideos("explore")
+    }
+    const LibraryQuery = () => {
+        fetchVideos("Library")
+    }
+
     const handleSearch = (event) => {
         event.preventDefault();
         fetchVideos(query);
     };
 
     useEffect(() => {
-        // Initial fetch with a default query if desired
+       
         fetchVideos('React tutorials');
     }, []);
 
     if (loading) {
         return <p>Loading...</p>;
     }
+    const openVideo = (videoId) => {
+        setSelectedVideoId(videoId);
+    };
+    
+    const closeVideo = () => {
+        setSelectedVideoId(null);
+    };
 
     return (
         <>
@@ -75,21 +96,21 @@ export default function Youtube() {
                         />
                         <p className="text">Home</p>
                     </div>
-                    <div className="images">
+                    <div className="images" onClick={exploreQuery}>
                         <img
                             src="https://github.com/PatelNeelMahesh/frontend_tasks/blob/main/02.youtube-clone/assets/explore.png?raw=true"
                             alt="Explore icon"
                         />
                         <p className="text">Explore</p>
                     </div>
-                    <div className="images">
+                    <div className="images" onClick={shortsQuery}>
                         <img
                             src="https://github.com/PatelNeelMahesh/frontend_tasks/blob/main/02.youtube-clone/assets/shorts.png?raw=true"
                             alt="Shorts icon"
                         />
                         <p className="text">Short</p>
                     </div>
-                    <div className="images">
+                    <div className="images" onClick={subscriptionQuery}>
                         <img
                             src="https://github.com/PatelNeelMahesh/frontend_tasks/blob/main/02.youtube-clone/assets/subscription.png?raw=true"
                             alt="Subscription icon"
@@ -99,7 +120,7 @@ export default function Youtube() {
                     </div>
                 </div>
                 <div className="navi2">
-                    <div className="images">
+                    <div className="images" onClick={LibraryQuery}>
                         <img
                             src="https://github.com/PatelNeelMahesh/frontend_tasks/blob/main/02.youtube-clone/assets/library.png?raw=true"
                             alt="Library icon"
@@ -237,17 +258,35 @@ export default function Youtube() {
             </div>
             <div className="main2">
                 {videoList.map((b) => (
-                    <div key={b.id} className="thumbnail1">
-                        <img src={b.img_t} alt="" height={145} />
-                        <div className="information">
-                            <img src={b.img_c} alt="" />
-                            <div className="videodetail">{b.detail}</div>
-                        </div>
-                        <div className="channelname">{b.channelname}</div>
-                        <div className="views">{b.feature}</div>
+                    <div key={b.id} className="thumbnail1" onClick={() => openVideo(b.id)}>
+                    <img src={b.img_t} alt={b.detail} height={145} />
+                    <div className="information">
+                        <div className="videodetail">{b.detail}</div>
                     </div>
+                    <div className="channelname">{b.channelname}</div>
+                    <div className="views">{b.feature}</div>
+                </div>
+                
                 ))}
             </div>
+            {selectedVideoId && (
+    <div className="video-modal" onClick={closeVideo}>
+        <div className="video-container" onClick={(e) => e.stopPropagation()}>
+            <iframe
+                width="800"
+                height="450"
+                src={`https://www.youtube.com/embed/${selectedVideoId}`}
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                title="YouTube video player"
+            ></iframe>
+            <button className="close-button" onClick={closeVideo}>
+                Close
+            </button>
+        </div>
+    </div>
+)}
         </>
     );
 }

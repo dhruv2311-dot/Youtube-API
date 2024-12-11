@@ -9,7 +9,7 @@ export default function Youtube() {
     const fetchVideos = async (searchQuery) => {
         setLoading(true);
         try {
-            const API_KEY = 'AIzaSyD15Zj65q52HQwTuDm-KcaS4yBy1j1ZleE'; 
+            const API_KEY = 'AIzaSyD15Zj65q52HQwTuDm-KcaS4yBy1j1ZleE';
             const response = await fetch(`https://www.googleapis.com/youtube/v3/search?key=${API_KEY}&part=snippet&type=video&q=${searchQuery}&maxResults=10`);
 
             if (!response.ok) {
@@ -82,7 +82,23 @@ export default function Youtube() {
                         />
                         <p className="text">Explore</p>
                     </div>
-                    <div className="navi2">
+                    <div className="images">
+                        <img
+                            src="https://github.com/PatelNeelMahesh/frontend_tasks/blob/main/02.youtube-clone/assets/shorts.png?raw=true"
+                            alt="Shorts icon"
+                        />
+                        <p className="text">Short</p>
+                    </div>
+                    <div className="images">
+                        <img
+                            src="https://github.com/PatelNeelMahesh/frontend_tasks/blob/main/02.youtube-clone/assets/subscription.png?raw=true"
+                            alt="Subscription icon"
+                        />
+                        <p className="text">Subscription</p>
+
+                    </div>
+                </div>
+                <div className="navi2">
                     <div className="images">
                         <img
                             src="https://github.com/PatelNeelMahesh/frontend_tasks/blob/main/02.youtube-clone/assets/library.png?raw=true"
@@ -125,6 +141,8 @@ export default function Youtube() {
                         />
                         <p className="text">Show More</p>
                     </div>
+
+                    
                 </div>
                 <h5>SUBSCRIPTIONS</h5>
                 <div className="navigator3">
@@ -172,12 +190,12 @@ export default function Youtube() {
                     </div>
                 </div>
 
-                </div>
+
             </div>
             <div className="navbar">
-                <input 
-                    type="text" 
-                    placeholder="Search" 
+                <input
+                    type="text"
+                    placeholder="Search"
                     className="search"
                     value={query}
                     onChange={(e) => setQuery(e.target.value)}
@@ -197,6 +215,12 @@ export default function Youtube() {
                         />
                     </div>
                 </div>
+            </div>
+            <div className="options">
+                <div className="create"><img src="https://github.com/PatelNeelMahesh/frontend_tasks/blob/main/02.youtube-clone/assets/create.png?raw=true" alt="" /></div>
+                <div className="more"><img src="https://github.com/PatelNeelMahesh/frontend_tasks/blob/main/02.youtube-clone/assets/more.png?raw=true" alt="" /></div>
+                <div className="bell"><img src="https://github.com/PatelNeelMahesh/frontend_tasks/blob/main/02.youtube-clone/assets/bell.png?raw=true" alt="" /></div>
+                <div className="account"><img src="https://github.com/PatelNeelMahesh/frontend_tasks/blob/main/02.youtube-clone/assets/Ellipse%204%20(5).png?raw=true" alt="" /></div>
             </div>
             <div className="related">
                 <button className="active">All</button>

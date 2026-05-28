@@ -10,7 +10,7 @@ export default function Youtube() {
     const fetchVideos = async (searchQuery) => {
         setLoading(true);
         try {
-            const API_KEY = 'AIzaSyD15Zj65q52HQwTuDm-KcaS4yBy1j1ZleE';
+            const API_KEY = 'AIzaSyCCQ3TGwt1UdA58q0HqtBRmvHvGAVwpKds';
             const response = await fetch(`https://www.googleapis.com/youtube/v3/search?key=${API_KEY}&part=snippet&type=video&q=${searchQuery}&maxResults=10`);
 
             if (!response.ok) {
